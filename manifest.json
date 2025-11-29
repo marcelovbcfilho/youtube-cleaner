@@ -1,0 +1,20 @@
+{
+    "manifest_version": 3,
+    "name": "YouTube Cleaner",
+    "version": "1.0",
+    "description": "Removes videos you've already seen from your homepage recommendations.",
+    "content_scripts": [
+        {
+            "matches": [
+                "*://www.youtube.com/*",
+                "*://youtube.com/*",
+                "*://m.youtube.com/*"
+            ],
+            "js": [
+                "content.js"
+            ],
+            "run_at": "document_idle"
+        }
+    ],
+    "permissions": []
+}
