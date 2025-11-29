@@ -1,8 +1,24 @@
 {
     "manifest_version": 3,
     "name": "YouTube Cleaner",
-    "version": "1.0",
+    "version": "1.1",
+    "license": "GPL-3.0",
     "description": "Removes videos you've already seen from your homepage recommendations.",
+    "options_ui": {
+        "page": "options.html",
+        "open_in_tab": true
+    },
+    "browser_specific_settings": {
+        "gecko": {
+            "id": "youtube-cleaner@marcelovbcfilho.com",
+            "data_collection_permissions": {
+                "required": [
+                    "none"
+                ]
+            }
+        }
+    },
+    "author": "marcelovbcfilho",
     "content_scripts": [
         {
             "matches": [
@@ -16,5 +32,7 @@
             "run_at": "document_idle"
         }
     ],
-    "permissions": []
+    "permissions": [
+        "storage"
+    ]
 }

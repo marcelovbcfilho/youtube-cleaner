@@ -1,6 +1,41 @@
 const DEBUG = true;
 let excludeVideosWithSeenPercentegeAboveOrEqualTo = 50;
 
+function loadSeenPercentageSetting() {
+    if (typeof browser !== 'undefined') {
+        browser.storage.local.get('excludeVideosWithSeenPercentegeAboveOrEqualTo').then(result => {
+            if (typeof result.excludeVideosWithSeenPercentegeAboveOrEqualTo === 'number') {
+                excludeVideosWithSeenPercentegeAboveOrEqualTo = result.excludeVideosWithSeenPercentegeAboveOrEqualTo;
+            }
+            log(`YouTube Cleaner loaded, removing videos with seen percentage >= ${excludeVideosWithSeenPercentegeAboveOrEqualTo}`);
+            debug("Waiting 1s before initial scan...");
+            setTimeout(() => {
+                debug("Running initial scan...");
+                removeRichItemsWithBottomOverlay();
+            }, 1000);
+        });
+    } else if (typeof chrome !== 'undefined') {
+        chrome.storage.local.get('excludeVideosWithSeenPercentegeAboveOrEqualTo', result => {
+            if (typeof result.excludeVideosWithSeenPercentegeAboveOrEqualTo === 'number') {
+                excludeVideosWithSeenPercentegeAboveOrEqualTo = result.excludeVideosWithSeenPercentegeAboveOrEqualTo;
+            }
+            log(`YouTube Cleaner loaded, removing videos with seen percentage >= ${excludeVideosWithSeenPercentegeAboveOrEqualTo}`);
+            debug("Waiting 1s before initial scan...");
+            setTimeout(() => {
+                debug("Running initial scan...");
+                removeRichItemsWithBottomOverlay();
+            }, 1000);
+        });
+    } else {
+        log(`YouTube Cleaner loaded, removing videos with seen percentage >= ${excludeVideosWithSeenPercentegeAboveOrEqualTo}`);
+        debug("Waiting 1s before initial scan...");
+        setTimeout(() => {
+            debug("Running initial scan...");
+            removeRichItemsWithBottomOverlay();
+        }, 1000);
+    }
+}
+
 function log(...args) {
     console.log("[YT Cleaner]", ...args);
 }
@@ -48,12 +83,8 @@ function removeRichItemsWithBottomOverlay() {
     });
 }
 
-log(`YouTube Cleaner loaded, removing videos with seen percentage >= ${excludeVideosWithSeenPercentegeAboveOrEqualTo}`);
-debug("Waiting 1s before initial scan...");
-setTimeout(() => {
-    debug("Running initial scan...");
-    removeRichItemsWithBottomOverlay();
-}, 1000);
+
+loadSeenPercentageSetting();
 
 const observer = new MutationObserver(mutations => {
     for (const mutation of mutations) {

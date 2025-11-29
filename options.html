@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>YouTube Cleaner Options</title>
+    <style>
+        body { font-family: sans-serif; margin: 2em; }
+        label { display: block; margin-bottom: 1em; }
+        input[type=range] { width: 300px; }
+    </style>
+</head>
+<body>
+    <h1>YouTube Cleaner Options</h1>
+    <form>
+        <label>
+            Exclude videos with seen percentage above or equal to:
+            <input type="range" id="seenPercentage" min="0" max="100" value="50">
+            <span id="percentageValue">50</span>%
+        </label>
+        <button type="button" id="saveBtn">Save</button>
+    </form>
+    <div id="status"></div>
+    <script src="options.js"></script>
+</body>
+</html>
